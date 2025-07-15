@@ -1,0 +1,42 @@
+---
+const images = [
+  {src: "/images/gallery/rainbow.jpeg", width: 1536, height: 2049 },
+  {src: "/images/gallery/albuquerque_decorated_sugar_cookies001.jpg", width: 2048, height: 1535 },
+  {src: "/images/gallery/albuquerque_decorated_sugar_cookies002.jpg",  width: 1536, height: 2048 }, 
+  {src: "/images/gallery/albuquerque_decorated_sugar_cookies003.jpg",  width: 1536, height: 2048 }, 
+  {src: "/images/gallery/albuquerque_decorated_sugar_cookies004.jpg",  width: 1536, height: 2048 }, 
+  {src: "/images/gallery/albuquerque_decorated_sugar_cookies005.jpg",  width: 1440, height: 1800 }, 
+];
+---
+
+<div class="gallery">
+  {images.map((img, index) => (
+    <a href={img.src} data-pswp-width={img.width} data-pswp-height={img.height} target="_blank" rel="noreferrer">
+
+        <img src={img.src} alt={`Image ${index + 1}`} width={img.width/5} height={img.height/5} loading="lazy" 
+          decoding="async"/>
+    </a>
+  ))}
+</div>
+
+
+<script>
+  import 'photoswipe/style.css'
+  import pswpModule from 'photoswipe'
+  import PhotoSwipeLightbox from 'photoswipe/lightbox'
+
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: '.gallery',
+    children: 'a',
+  pswpModule: () => import ("photoswipe"),
+  })
+
+  document.addEventListener(
+    'astro:page-load',
+    () => { if (lightbox) lightbox.init() },
+    { once: false },
+  )
+  // Don't forget to initialize!
+  lightbox.init();
+
+</script>

@@ -12,10 +12,12 @@
 	},
 	"dependencies": {
 		"@astrojs/cloudflare": "^12.6.0",
-		"astro": "^5.11.1"
+		"astro": "^5.11.1",
+		"photoswipe": "^5.4.4"
 	},
 	"devDependencies": {
 		"@types/node": "^24.0.14",
+		"@types/photoswipe": "^4.1.6",
 		"wrangler": "^4.24.3"
 	}
 }

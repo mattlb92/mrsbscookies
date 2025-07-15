@@ -1,0 +1,55 @@
+---
+import PhotoSwipeLightbox from 'photoswipe/lightbox';
+import 'photoswipe/style.css';
+
+//const lightbox = new PhotoSwipeLightbox({
+//    gallery: '#my-gallery',
+//    children: 'a',
+//    pswpModule: () => import('photoswipe')
+//});
+//lightbox.init();
+
+import PhotoSwipeLightbox from '/photoswipe/photoswipe-lightbox.esm.js';
+
+const options = {
+  dataSource: [
+
+    // simple image
+    {
+    src: '/images/test.jpeg',
+      width: 1620,
+      height: 1080,
+      alt: 'test image 1'
+    },
+
+    {
+      src: 'https://dummyimage.com/1950x1300/555/fff/?text=1950x1300',
+      width: 1950,
+      height: 1300,
+      alt: 'test image 2'
+    },
+
+    // responsive image
+    {
+      srcset: 'https://dummyimage.com/1500x1000/555/fff/?text=1500x1000 1500w, https://dummyimage.com/1200x800/555/fff/?text=1200x800 1200w, https://dummyimage.com/600x400/555/fff/?text=600x400 600w',
+      src: 'https://dummyimage.com/1500x1000/555/fff/?text=1500x1000',
+      width: 1500,
+      height: 1000,
+      alt: 'test image 3',
+    },
+
+    // HTML slide
+    {
+      html: '<div class="custom-html-slide">This is custom HTML slide. <a href="http://example.com" target="_blank" rel="nofollow">Test Link</a>.</div>'
+    }
+
+  ],
+  showHideAnimationType: 'none',
+  pswpModule: () => import('/photoswipe/photoswipe.esm.js'),
+};
+const lightbox = new PhotoSwipeLightbox(options);
+lightbox.init();
+
+document.querySelector('#btn-open-pswp-from-arr-lightbox').onclick = () => {
+  lightbox.loadAndOpen(0); // defines start slide index
+};
