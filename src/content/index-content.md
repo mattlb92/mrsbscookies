@@ -15,12 +15,15 @@ Hello and thank you for considering us for your cookie needs! We're thrilled to 
 
 Because your payment reserves the order and prevents me from booking other clients, it is non-refundable. 
 
+For large orders or special events booked in advance, a 50% deposit is required, with the balance due two weeks from your event. 
+
 ## Additional Information:
 
 - Please provide at least **14 days notice** for your order. 
     - Rush orders may be considered for an additional fee
 - If you desire special shapes which require unique cookie cutters, I'll need at least three weeks' notice to get them ordered. The cost of the cutter may be added to your total. 
 - I will color match as best as possible and will take inspiration from photos, but will not copy someone else's work.
+    - I recently switched to using exclusively natural dyes in my cookies which can make matching exceptionally vibrant colors difficult.
 - Nothing is confirmed until the invoice has been paid in full.
 
 Please feel free to contact us directly for any additional inquiries or to discuss custom orders beyond our standard tiers at mrsbscookies505@gmail.com
