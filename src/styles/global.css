@@ -405,3 +405,23 @@ html.light {
     width: 350px;
   }
 }
+
+/* 
+ * Gallery styling
+ * */
+.gallery {
+  width: 100vw;          /* fills the full viewport width */
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;    /* cancels out parent padding/margin */
+  margin-right: -50vw;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem; /* or whatever spacing you want */
+  justify-content: center; /* or space-between, etc. */
+}
+.gallery a {
+  text-decoration: none;   /* removes underline */
+  border: none;
+}
