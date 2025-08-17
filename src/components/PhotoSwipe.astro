@@ -50,7 +50,9 @@ try {
       data-pswp-src={img.highSrc}
       data-pswp-width={img.width}
       data-pswp-height={img.height}
-      target="_blank"
+      key={index}
+      target="_blank" 
+      rel="noreferrer"
     >
       <img
         src={img.lowSrc}
@@ -63,3 +65,51 @@ try {
     </a>
   ))}
 </div>
+
+<script>
+  import 'photoswipe/style.css'
+  import pswpModule from 'photoswipe'
+  import PhotoSwipeLightbox from 'photoswipe/lightbox'
+
+  const lightbox = new PhotoSwipeLightbox({
+    pswpModule,
+    children: 'a',
+    gallery: '#gallery',
+  })
+
+  document.addEventListener(
+    'astro:page-load',
+    () => { if (lightbox) lightbox.init() },
+    { once: false },
+  )
+</script>
+<!--
+<script type="module" client:load>
+  import PhotoSwipeLightbox from 'photoswipe/lightbox'
+  import 'photoswipe/style.css'
+
+  // Wait for DOM to be ready
+  document.addEventListener('DOMContentLoaded', () => {
+    const lightbox = new PhotoSwipeLightbox({
+      gallery: '#gallery',  // Changed to ID selector
+      children: 'a',
+      pswpModule: () => import('photoswipe')
+    })
+    lightbox.init()
+  })
+</script>
+<script type="module" client:Load>
+    import PhotoSwipeLightbox from 'photoswipe/lightbox'
+    import pswpModule from 'photoswipe'
+    import 'photoswipe/style.css'
+
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: '.gallery',
+    children: 'a',
+    pswpModule: () => import('photoswipe'),
+  });
+
+  lightbox.init();
+</script>
+
+    -->
