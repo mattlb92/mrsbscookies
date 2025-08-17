@@ -1,48 +1,65 @@
 ---
-const object = await Astro.locals.runtime.env.GALLERY_IMAGES.get("gallery/full_resolution/gallery.json");
-// Get the gallery.json metadata from the R2 bucket
+const galleryJson = await Astro.locals.runtime.env.GALLERY_IMAGES.get("gallery/full_resolution/gallery.json");
 
-
-if (!object || !object.body) {
+if (!galleryJson || !galleryJson.body) {
   throw new Error("Could not load gallery metadata from R2");
+} else {
 }
 
-const text = await object.text(); // read as string
-const metadata = JSON.parse(text); // parse into array
+let images;
+try {
+  const text = await galleryJson.text();
+  //console.log("Raw JSON text:", text); // Debug the raw content
+  
+  const metadata = JSON.parse(text);
+  //console.log("Parsed metadata:", metadata); // Debug the parsed structure
+  
+  if (!Array.isArray(metadata)) {
+    throw new Error("Gallery metadata is not an array");
+  }
 
-// Use those metadata to load all of the images in `gallery/`
-const images = metadata.map(({ src, width, height, alt }) => ({
-  src: `/r2-images/${src}`,
-  width,
-  height,
-  alt,
-}));
+  images = metadata.map(({ src, width, height, alt }) => {
+    if (!src) {
+      console.warn("Image entry missing src:", { src, width, height, alt });
+      return null;
+    }
+    
+    const filename = src.split('/').pop();
+    return {
+    lowSrc: `/r2-images/gallery/low_resolution/${filename}`,
+    highSrc: `/r2-images/gallery/full_resolution/${filename}`,
+      width: width || 0,  // Default values if missing
+      height: height || 0,
+      alt: alt || "Gallery image"
+    };
+  }).filter(Boolean); // Remove any null entries from invalid images
+
+} catch (err) {
+  console.error("Failed to process gallery metadata:", err);
+  throw new Error(`Gallery processing failed: ${err.message}`);
+}
+
+//console.log("Processed images:", images);
+
 ---
 
-<div class="gallery">
+<div id="gallery" class="gallery">
   {images.map((img, index) => (
-    <a href={img.src} data-pswp-width={img.width} data-pswp-height={img.height} target="_blank" rel="noreferrer">
-
-        <img src={img.src} alt={img.alt} width={img.width/5} height={img.height/5} loading="lazy" 
-        decoding="async" />
+    <a
+      href={img.highSrc}
+      data-pswp-src={img.highSrc}
+      data-pswp-width={img.width}
+      data-pswp-height={img.height}
+      target="_blank"
+    >
+      <img
+        src={img.lowSrc}
+        alt={img.alt}
+        width={img.width / 5}
+        height={img.height / 5}
+        loading="lazy"
+        decoding="async"
+      />
     </a>
   ))}
 </div>
-
-<!--<script type="module" src="../../src/scripts/init-lightbox.js" client:load></script>
-<script type="module" src="/src/scripts/init-lightbox.js" client:load></script>-->
-
-<script type="module" client:Load>
-    import PhotoSwipeLightbox from 'photoswipe/lightbox'
-    import pswpModule from 'photoswipe'
-    import 'photoswipe/style.css'
-
-  const lightbox = new PhotoSwipeLightbox({
-    gallery: '.gallery',
-    children: 'a',
-    pswpModule: () => import('photoswipe'),
-  });
-
-  lightbox.init();
-</script>
-
